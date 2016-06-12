@@ -1,0 +1,74 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.FragmentProfessional">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo"
+            android:layout_marginBottom="30dp"
+            android:id="@+id/VMRLogo"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/VMRLogo"
+            android:inputType="text"
+            android:text="E-mail / Username"
+            android:ems="15"
+            android:id="@+id/etProfessionalEmail"
+            />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/etProfessionalEmail"
+            android:inputType="textVisiblePassword"
+            android:text="Password"
+            android:ems="15"
+            android:id="@+id/etProfessionalPassword"
+            />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/etProfessionalPassword"
+            android:inputType="textVisiblePassword"
+            android:text="Professional ID"
+            android:ems="15"
+            android:id="@+id/etProfessionalID"
+            />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etProfessionalID"
+            android:layout_marginLeft="50dp"
+            android:id="@+id/cbRememberPassword"
+            android:text="Remember me"
+            android:layout_marginTop="5dp"
+            />
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="50dp"
+            android:layout_below="@id/cbRememberPassword"
+            android:id="@+id/buttonProfessionalSignIn"
+            android:text="Sign In"
+            android:background="#3b8898"/>
+
+
+    </RelativeLayout>
+
+</FrameLayout>
