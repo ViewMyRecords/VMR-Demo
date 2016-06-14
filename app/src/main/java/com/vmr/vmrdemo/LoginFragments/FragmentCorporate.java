@@ -1,7 +1,6 @@
-package com.vmr.vmrdemo.Fragments;
+package com.vmr.vmrdemo.LoginFragments;
 
-import android.content.Context;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.vmr.vmrdemo.HomeActivity;
 import com.vmr.vmrdemo.R;
 
 
@@ -25,7 +25,9 @@ public class FragmentCorporate extends Fragment {
         buttonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "Sign In clicked.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Corporate Sign In clicked.", Toast.LENGTH_SHORT).show();
+                Intent homeIntent = new Intent(getContext(), HomeActivity.class);
+                startActivity(homeIntent);
             }
         });
         return rootView;

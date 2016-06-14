@@ -3,6 +3,8 @@ package com.vmr.vmrdemo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,6 +14,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.vmr.vmrdemo.HomeFragments.FragmentMyRecords;
+import com.vmr.vmrdemo.HomeFragments.FragmentOffline;
+import com.vmr.vmrdemo.HomeFragments.FragmentRecentlyAccessed;
+import com.vmr.vmrdemo.HomeFragments.FragmentReports;
+import com.vmr.vmrdemo.HomeFragments.FragmentToBeIndexed;
+import com.vmr.vmrdemo.HomeFragments.FragmentTrash;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -24,22 +33,36 @@ public class HomeActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        assert fab != null;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Snackbar.make(view, "Add new item action", Snackbar.LENGTH_LONG).show();
             }
         });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        assert drawer != null;
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(this);
+
+        Fragment fragment = null;
+        Class fragmentClass = null;
+        fragmentClass = FragmentMyRecords.class;
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.home_frame_holder, fragment).commit();
     }
 
     @Override
@@ -79,18 +102,26 @@ public class HomeActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        Fragment fragment = null;
+        Class fragmentClass = null;
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.my_records) {
+            fragmentClass = FragmentMyRecords.class;
+        } else if (id == R.id.recently_accessed) {
+            fragmentClass = FragmentRecentlyAccessed.class;
+        } else if (id == R.id.to_be_indexed) {
+            fragmentClass = FragmentToBeIndexed.class;
+        } else if (id == R.id.offline) {
+            fragmentClass = FragmentOffline.class;
+        } else if (id == R.id.reports) {
+            fragmentClass = FragmentReports.class;
+        } else if (id == R.id.trash) {
+            fragmentClass = FragmentTrash.class;
+        } else if (id == R.id.help) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.about) {
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.log_out) {
 
         }
 

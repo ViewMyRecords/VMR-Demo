@@ -4,10 +4,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.vmr.vmrdemo.Fragments.FragmentCorporate;
-import com.vmr.vmrdemo.Fragments.FragmentFamily;
-import com.vmr.vmrdemo.Fragments.FragmentIndividual;
-import com.vmr.vmrdemo.Fragments.FragmentProfessional;
+import com.vmr.vmrdemo.LoginFragments.FragmentCorporate;
+import com.vmr.vmrdemo.LoginFragments.FragmentFamily;
+import com.vmr.vmrdemo.LoginFragments.FragmentIndividual;
+import com.vmr.vmrdemo.LoginFragments.FragmentProfessional;
 
 /**
  * Created by abhijit on 6/10/16.
