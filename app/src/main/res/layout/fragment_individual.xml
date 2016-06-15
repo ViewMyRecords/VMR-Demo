@@ -14,35 +14,48 @@
             android:layout_height="wrap_content"
             android:src="@drawable/logo"
             android:layout_marginBottom="30dp"
-            android:id="@+id/VMRLogo"/>
+            android:id="@+id/VMRLogo"
+            android:contentDescription="VMR Logo" />
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilIndividualEmail"
             android:layout_below="@id/VMRLogo"
-            android:inputType="textEmailAddress"
-            android:text="E-mail"
-            android:ems="15"
-            android:id="@+id/individualEmail"
-            />
-
-        <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/individualEmail"
-            android:inputType="textVisiblePassword"
-            android:text="Password"
-            android:ems="15"
-            android:id="@+id/individualPassword"
-             />
+            android:layout_centerHorizontal="true" >
+            <EditText
+                android:id="@+id/etIndividualEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:singleLine="true"
+                android:inputType="textEmailAddress"
+                android:hint="E-mail"
+                android:ems="15" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilIndividualPassword"
+            android:layout_below="@id/tilIndividualEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true" >
+            <EditText
+                android:id="@+id/etIndividualPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:inputType="textPassword"
+                android:hint="Password"
+                android:ems="15" />
+        </android.support.design.widget.TextInputLayout>
+
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/individualPassword"
+            android:layout_below="@id/tilIndividualPassword"
             android:layout_marginLeft="50dp"
-            android:id="@+id/cbRememberPassword"
+            android:id="@+id/cbIndividualRememberPassword"
             android:text="Remember me"
             android:layout_marginTop="5dp"
             />
@@ -52,12 +65,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="50dp"
-            android:layout_below="@id/cbRememberPassword"
-            android:id="@+id/buttonIndividualSignIn"
+            android:layout_below="@id/cbIndividualRememberPassword"
+            android:id="@+id/btnIndividualSignIn"
+            android:background="@color/colorPrimary"
             android:text="Sign In"
-            android:background="#3b8898"/>
-
-
+            />
+        <!--android:background="#3b8898"-->
     </RelativeLayout>
 
 </FrameLayout>

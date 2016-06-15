@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.vmr.vmrdemo.HomeActivity;
@@ -21,13 +23,24 @@ public class FragmentCorporate extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_corporate, container, false);
-        Button buttonSignIn = (Button) rootView.findViewById(R.id.buttonCorpSignIn);
+
+        final EditText etEmail = (EditText) rootView.findViewById(R.id.etCorpEmail);
+        final EditText etPassword = (EditText) rootView.findViewById(R.id.etCorpPassword);
+        final EditText etCorpId = (EditText) rootView.findViewById(R.id.etCorpID);
+        CheckBox cbRememberMe = (CheckBox) rootView.findViewById(R.id.cbCorpRememberPassword);
+        Button buttonSignIn = (Button) rootView.findViewById(R.id.btnCorpSignIn);
+
         buttonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "Corporate Sign In clicked.", Toast.LENGTH_SHORT).show();
-                Intent homeIntent = new Intent(getContext(), HomeActivity.class);
-                startActivity(homeIntent);
+                if (etEmail.getText().toString().equals("abhijit@vmr.com")
+                        && etPassword.getText().toString().equals("password")
+                        && etCorpId.getText().toString().equals("12345")) {
+                    Intent homeIntent = new Intent(getContext(), HomeActivity.class);
+                    startActivity(homeIntent);
+                } else {
+                    Toast.makeText(getActivity(), "Invalid Username or Password.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         return rootView;

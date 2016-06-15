@@ -17,43 +17,63 @@
             android:layout_marginBottom="30dp"
             android:id="@+id/VMRLogo"/>
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilProfessionalEmail"
             android:layout_below="@id/VMRLogo"
-            android:inputType="text"
-            android:text="E-mail / Username"
-            android:ems="15"
-            android:id="@+id/etProfessionalEmail"
-            />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true" >
+            <EditText
+                android:id="@+id/etProfessionalEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:singleLine="true"
+                android:inputType="textEmailAddress"
+                android:hint="E-mail"
+                android:ems="15" />
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilProfessionalPassword"
+            android:layout_below="@id/tilProfessionalEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/etProfessionalEmail"
-            android:inputType="textVisiblePassword"
-            android:text="Password"
-            android:ems="15"
-            android:id="@+id/etProfessionalPassword"
-            />
-        <EditText
+            android:layout_centerHorizontal="true" >
+            <EditText
+                android:id="@+id/etProfessionalPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:singleLine="true"
+                android:inputType="textPassword"
+                android:hint="Password"
+                android:ems="15" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilProfessionalId"
+            android:layout_below="@id/tilProfessionalPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/etProfessionalPassword"
-            android:inputType="textVisiblePassword"
-            android:text="Professional ID"
-            android:ems="15"
-            android:id="@+id/etProfessionalID"
-            />
+            android:layout_centerHorizontal="true" >
+            <EditText
+                android:id="@+id/etProfessionalID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:singleLine="true"
+                android:inputType="textPassword"
+                android:hint="Professional-ID"
+                android:ems="15" />
+        </android.support.design.widget.TextInputLayout>
+
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/etProfessionalID"
+            android:layout_below="@id/tilProfessionalId"
             android:layout_marginLeft="50dp"
-            android:id="@+id/cbRememberPassword"
+            android:id="@+id/cbProRememberPassword"
             android:text="Remember me"
             android:layout_marginTop="5dp"
             />
@@ -63,8 +83,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="50dp"
-            android:layout_below="@id/cbRememberPassword"
-            android:id="@+id/buttonProfessionalSignIn"
+            android:layout_below="@id/cbProRememberPassword"
+            android:id="@+id/btnProfessionalSignIn"
             android:text="Sign In"
             android:background="#3b8898"/>
 

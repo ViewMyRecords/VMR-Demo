@@ -19,4 +19,8 @@ public class FragmentMyRecords extends Fragment {
         return inflater.inflate(R.layout.fragment_my_records, container, false);
     }
 
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
+    }
 }

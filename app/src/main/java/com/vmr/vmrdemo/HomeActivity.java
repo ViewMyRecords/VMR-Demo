@@ -1,5 +1,6 @@
 package com.vmr.vmrdemo;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,11 +20,20 @@ import com.vmr.vmrdemo.HomeFragments.FragmentMyRecords;
 import com.vmr.vmrdemo.HomeFragments.FragmentOffline;
 import com.vmr.vmrdemo.HomeFragments.FragmentRecentlyAccessed;
 import com.vmr.vmrdemo.HomeFragments.FragmentReports;
+import com.vmr.vmrdemo.HomeFragments.FragmentSharedWithMe;
 import com.vmr.vmrdemo.HomeFragments.FragmentToBeIndexed;
 import com.vmr.vmrdemo.HomeFragments.FragmentTrash;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        FragmentMyRecords.OnFragmentInteractionListener,
+        FragmentOffline.OnFragmentInteractionListener,
+        FragmentRecentlyAccessed.OnFragmentInteractionListener,
+        FragmentReports.OnFragmentInteractionListener,
+        FragmentSharedWithMe.OnFragmentInteractionListener,
+        FragmentToBeIndexed.OnFragmentInteractionListener,
+        FragmentTrash.OnFragmentInteractionListener
+    {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +41,20 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        if (savedInstanceState == null) {
+            Fragment fragment = null;
+            Class fragmentClass = null;
+            fragmentClass = FragmentMyRecords.class;
+            try {
+                fragment = (Fragment) fragmentClass.newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.home_fragment_holder, fragment).commit();
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         assert fab != null;
@@ -41,7 +65,7 @@ public class HomeActivity extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_home);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         assert drawer != null;
@@ -51,23 +75,14 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.my_records);
 
-        Fragment fragment = null;
-        Class fragmentClass = null;
-        fragmentClass = FragmentMyRecords.class;
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.home_frame_holder, fragment).commit();
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_home);
+        assert drawer != null;
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -111,22 +126,43 @@ public class HomeActivity extends AppCompatActivity
             fragmentClass = FragmentRecentlyAccessed.class;
         } else if (id == R.id.to_be_indexed) {
             fragmentClass = FragmentToBeIndexed.class;
+        } else if (id == R.id.shared_with_me) {
+            fragmentClass = FragmentSharedWithMe.class;
         } else if (id == R.id.offline) {
             fragmentClass = FragmentOffline.class;
         } else if (id == R.id.reports) {
             fragmentClass = FragmentReports.class;
         } else if (id == R.id.trash) {
             fragmentClass = FragmentTrash.class;
-        } else if (id == R.id.help) {
+        } else {
+            fragmentClass = FragmentMyRecords.class;
+        }
+//        } else if (id == R.id.help) {
+//
+//        } else if (id == R.id.about) {
+//
+//        } else if (id == R.id.log_out) {
+//
+//        }
 
-        } else if (id == R.id.about) {
-
-        } else if (id == R.id.log_out) {
-
+        try {
+            assert fragmentClass != null;
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.home_fragment_holder, fragment).commit();
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_home);
+        assert drawer != null;
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

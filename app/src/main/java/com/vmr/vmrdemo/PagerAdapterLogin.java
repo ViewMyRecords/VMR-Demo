@@ -2,6 +2,7 @@ package com.vmr.vmrdemo;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.vmr.vmrdemo.LoginFragments.FragmentCorporate;
@@ -12,12 +13,12 @@ import com.vmr.vmrdemo.LoginFragments.FragmentProfessional;
 /**
  * Created by abhijit on 6/10/16.
  */
-public class PagerAdapter extends FragmentStatePagerAdapter {
+public class PagerAdapterLogin extends FragmentPagerAdapter {
     int mNumOfTabs;
-
-    public PagerAdapter(FragmentManager fm, int NumOfTabs) {
+    String[] tabs = { "Individual", "Family", "Professional", "Corporate" };
+    public PagerAdapterLogin(FragmentManager fm) {
         super(fm);
-        this.mNumOfTabs = NumOfTabs;
+        this.mNumOfTabs = tabs.length;
     }
 
     @Override
@@ -43,5 +44,21 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         return mNumOfTabs;
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        switch (position) {
+            case 0:
+                return tabs[0];
+            case 1:
+                return tabs[1];
+            case 2:
+                return tabs[2];
+            case 3:
+                return tabs[3];
+            default:
+                return null;
+        }
     }
 }

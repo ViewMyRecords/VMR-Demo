@@ -23,7 +23,7 @@
 
     <!--<include layout="@layout/content_home" />-->
     <FrameLayout
-        android:id="@+id/home_frame_holder"
+        android:id="@+id/home_fragment_holder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"/>
