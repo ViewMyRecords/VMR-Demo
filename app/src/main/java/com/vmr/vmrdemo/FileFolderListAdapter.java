@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
@@ -49,6 +50,7 @@ public class FileFolderListAdapter extends ArrayAdapter<File> {
             TextView fileName = (TextView) view.findViewById(R.id.tvFileName);
             TextView fileSize = (TextView) view.findViewById(R.id.tvFileSize);
             TextView fileTimestamp = (TextView) view.findViewById(R.id.tvTimeStamp);
+            ImageView fileImage = (ImageView) view.findViewById(R.id.ivFileIcon);
 
             if(fileName!=null) {
                 fileName.setText(fileFolder.getName());
@@ -77,6 +79,14 @@ public class FileFolderListAdapter extends ArrayAdapter<File> {
             if(fileTimestamp!=null) {
                 Date lastModified = new Date(fileFolder.lastModified());
                 fileTimestamp.setText(lastModified.toString());
+            }
+
+            if(fileImage != null){
+                if (! fileFolder.isDirectory()) {
+                    fileImage.setImageResource(R.drawable.ic_file);
+                } else {
+                    fileImage.setImageResource(R.drawable.ic_folder_2);
+                }
             }
         }
         return view;

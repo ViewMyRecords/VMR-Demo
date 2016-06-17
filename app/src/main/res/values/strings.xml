@@ -19,7 +19,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_login">VMR Demo</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="individual_tab_text">Individual</string>

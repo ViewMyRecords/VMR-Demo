@@ -13,12 +13,12 @@ import com.vmr.vmrdemo.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link FragmentSharedWithMe.OnFragmentInteractionListener} interface
+ * {@link FragmentHelp.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link FragmentSharedWithMe#newInstance} factory method to
+ * Use the {@link FragmentHelp#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentSharedWithMe extends Fragment {
+public class FragmentHelp extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,7 +30,7 @@ public class FragmentSharedWithMe extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public FragmentSharedWithMe() {
+    public FragmentHelp() {
         // Required empty public constructor
     }
 
@@ -40,11 +40,11 @@ public class FragmentSharedWithMe extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentSharedWithMe.
+     * @return A new instance of fragment FragmentHelp.
      */
     // TODO: Rename and change types and number of parameters
-    public static FragmentSharedWithMe newInstance(String param1, String param2) {
-        FragmentSharedWithMe fragment = new FragmentSharedWithMe();
+    public static FragmentHelp newInstance(String param1, String param2) {
+        FragmentHelp fragment = new FragmentHelp();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -65,12 +65,11 @@ public class FragmentSharedWithMe extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if (mListener != null) {
-            mListener.onFragmentInteraction("Shared With Me");
+            mListener.onFragmentInteraction("Help");
         }
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_shared_with_me, container, false);
+        return inflater.inflate(R.layout.fragment_help, container, false);
     }
-
 
     @Override
     public void onAttach(Context context) {

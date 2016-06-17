@@ -1,12 +1,12 @@
 package com.vmr.vmrdemo;
 
+import android.app.SearchManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.view.View;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,6 +16,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.appindexing.Action;
+import com.vmr.vmrdemo.HomeFragments.FragmentAbout;
+import com.vmr.vmrdemo.HomeFragments.FragmentHelp;
 import com.vmr.vmrdemo.HomeFragments.FragmentMyRecords;
 import com.vmr.vmrdemo.HomeFragments.FragmentOffline;
 import com.vmr.vmrdemo.HomeFragments.FragmentRecentlyAccessed;
@@ -25,15 +28,17 @@ import com.vmr.vmrdemo.HomeFragments.FragmentToBeIndexed;
 import com.vmr.vmrdemo.HomeFragments.FragmentTrash;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,
+        implements
+        NavigationView.OnNavigationItemSelectedListener,
         FragmentMyRecords.OnFragmentInteractionListener,
         FragmentOffline.OnFragmentInteractionListener,
         FragmentRecentlyAccessed.OnFragmentInteractionListener,
         FragmentReports.OnFragmentInteractionListener,
         FragmentSharedWithMe.OnFragmentInteractionListener,
         FragmentToBeIndexed.OnFragmentInteractionListener,
-        FragmentTrash.OnFragmentInteractionListener
-    {
+        FragmentTrash.OnFragmentInteractionListener,
+        FragmentAbout.OnFragmentInteractionListener,
+        FragmentHelp.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +49,7 @@ public class HomeActivity extends AppCompatActivity
 
         if (savedInstanceState == null) {
             Fragment fragment = null;
-            Class fragmentClass = null;
-            fragmentClass = FragmentMyRecords.class;
+            Class fragmentClass = FragmentMyRecords.class;
             try {
                 fragment = (Fragment) fragmentClass.newInstance();
             } catch (Exception e) {
@@ -55,15 +59,6 @@ public class HomeActivity extends AppCompatActivity
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.home_fragment_holder, fragment).commit();
         }
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        assert fab != null;
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Add new item action", Snackbar.LENGTH_LONG).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_home);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -94,6 +89,9 @@ public class HomeActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         return true;
     }
 
@@ -134,16 +132,14 @@ public class HomeActivity extends AppCompatActivity
             fragmentClass = FragmentReports.class;
         } else if (id == R.id.trash) {
             fragmentClass = FragmentTrash.class;
-        } else {
-            fragmentClass = FragmentMyRecords.class;
+        } else if (id == R.id.about) {
+            fragmentClass = FragmentAbout.class;
+        } else if (id == R.id.help) {
+            fragmentClass = FragmentHelp.class;
+        } else if (id == R.id.log_out) {
+            finish();
+            return true;
         }
-//        } else if (id == R.id.help) {
-//
-//        } else if (id == R.id.about) {
-//
-//        } else if (id == R.id.log_out) {
-//
-//        }
 
         try {
             assert fragmentClass != null;
@@ -162,7 +158,44 @@ public class HomeActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onFragmentInteraction(String string) {
+        getSupportActionBar().setTitle(string);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Home Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://com.vmr.vmrdemo/http/host/path")
+        );
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Home Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://com.vmr.vmrdemo/http/host/path")
+        );
 
     }
 }
