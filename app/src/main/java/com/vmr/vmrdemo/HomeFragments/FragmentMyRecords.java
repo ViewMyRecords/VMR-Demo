@@ -1,26 +1,26 @@
 package com.vmr.vmrdemo.HomeFragments;
 
 import android.content.Context;
-import android.net.Uri;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.vmr.vmrdemo.FileFolderListAdapter;
-import com.vmr.vmrdemo.HomeActivity;
 import com.vmr.vmrdemo.R;
 
 import java.io.File;
@@ -31,40 +31,66 @@ import java.util.List;
 
 public class FragmentMyRecords extends Fragment {
 
-    private FileFolderListAdapter mAdapter;
     private List<File> mFileList;
-    private OnFragmentInteractionListener mListener;
+    private OnFragmentInteractionListener fragmentInteractionListener;
+    private FloatingActionButton fab;
+    private BottomSheetBehavior behavior;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // User interface to change the Title in the Activity
+        if (fragmentInteractionListener != null) {
+            fragmentInteractionListener.onFragmentInteraction("My Records");
+        }
         // Inflate the layout for this fragment
-//        mListener.onFragmentInteraction("My Records");
         View view = inflater.inflate(R.layout.fragment_my_records, container, false);
-
+        // Get the views from the fragment layout
         ListView listView = (ListView) view.findViewById(R.id.lvMyRecords);
+        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) view.findViewById(R.id.bottom_sheet_layout);
+        fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        final FrameLayout bottomSheet = (FrameLayout) coordinatorLayout.findViewById(R.id.bottom_sheet_frame);
+        behavior = BottomSheetBehavior.from(bottomSheet);
+        behavior.setPeekHeight(150);
+        behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
+        // Get file list
         mFileList = getFileList();
-        mAdapter = new FileFolderListAdapter(getActivity(), mFileList);
 
-        listView.setAdapter(mAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        // Set adapter for the ListView
+        FileFolderListAdapter mAdapter = new FileFolderListAdapter(getActivity(), mFileList);
+
+
+        // Set Callback for BottomSheet interaction
+        // Handle FAB visibility
+        behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String text = mFileList.get(i).getName();
-                Toast.makeText(getActivity(), text + " clicked.", Toast.LENGTH_SHORT).show();
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                Log.i("-> BottomSheet Callback", "newState->"+newState);
+                if ( newState == BottomSheetBehavior.STATE_EXPANDED ) {
+                    fab.hide();
+                } else {
+                    fab.show();
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
             }
         });
 
-        final FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
-        assert fab != null;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Add new item action", Snackbar.LENGTH_LONG).show();
+                fab.hide();
+                bottomSheet.setBackgroundColor(Color.BLACK);
+                bottomSheet.getBackground().setAlpha(50);
+                behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
         });
 
+        listView.setAdapter(mAdapter);
         listView.setOnScrollListener(new ListView.OnScrollListener(){
 
             @Override
@@ -82,9 +108,26 @@ public class FragmentMyRecords extends Fragment {
             }
         });
 
-        if (mListener != null) {
-            mListener.onFragmentInteraction("My Records");
-        }
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                String text = mFileList.get(i).getName();
+                Toast.makeText(getActivity(), text + " clicked.", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
+        bottomSheet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheet.setBackgroundColor(Color.TRANSPARENT);
+                behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+            }
+        });
+
 
         return view;
     }
@@ -93,7 +136,7 @@ public class FragmentMyRecords extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+            fragmentInteractionListener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -126,6 +169,8 @@ public class FragmentMyRecords extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(String title);
+        void onFragmentInteraction(String title);
     }
+
+
 }

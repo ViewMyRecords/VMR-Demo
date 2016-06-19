@@ -1,6 +1,7 @@
 package com.vmr.vmrdemo;
 
 import android.app.SearchManager;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.vmr.vmrdemo.HomeFragments.FragmentAbout;
@@ -71,6 +75,24 @@ public class HomeActivity extends AppCompatActivity
         assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.my_records);
+        View headerView = navigationView.getHeaderView(0);
+
+        ImageButton settingButton = (ImageButton) headerView.findViewById(R.id.action_settings);
+        settingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent settingsIntent = new Intent(getBaseContext() , SettingsActivity.class);
+                startActivity(settingsIntent);
+            }
+        });
+
+        ImageButton notificationButton = (ImageButton) headerView.findViewById(R.id.action_notifications);
+        notificationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getBaseContext(), "Notifications clicked.", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -88,7 +110,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
+        getMenuInflater().inflate(R.menu.home_actionbar_menu, menu);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
         SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));

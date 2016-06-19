@@ -3,12 +3,16 @@ package com.vmr.vmrdemo;/*
  */
 
 import android.content.Context;
+import android.support.v7.widget.PopupMenu;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.Date;
@@ -19,6 +23,7 @@ public class FileFolderListAdapter extends ArrayAdapter<File> {
     private Context context;
     private int viewResourceId;
     private List<File>items;
+    public PopupMenu popup;
 
     public FileFolderListAdapter(Context context, List<File> fileFoldersList) {
         super(context, R.layout.file_folder_layout , fileFoldersList);
@@ -51,6 +56,19 @@ public class FileFolderListAdapter extends ArrayAdapter<File> {
             TextView fileSize = (TextView) view.findViewById(R.id.tvFileSize);
             TextView fileTimestamp = (TextView) view.findViewById(R.id.tvTimeStamp);
             ImageView fileImage = (ImageView) view.findViewById(R.id.ivFileIcon);
+            ImageView fileOverflowMenu = (ImageView) view.findViewById(R.id.ivOverflow);
+
+            popup = new PopupMenu(getContext(), fileOverflowMenu, Gravity.CENTER);
+            popup.getMenuInflater().inflate(R.menu.file_overflow_manu, popup.getMenu());
+            popup.setOnMenuItemClickListener(
+                    new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            Toast.makeText(getContext(), "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                            return false;
+                        }
+                    });
+
 
             if(fileName!=null) {
                 fileName.setText(fileFolder.getName());
@@ -87,6 +105,15 @@ public class FileFolderListAdapter extends ArrayAdapter<File> {
                 } else {
                     fileImage.setImageResource(R.drawable.ic_folder_2);
                 }
+            }
+
+            if(fileOverflowMenu != null){
+                fileOverflowMenu.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        popup.show();
+                    }
+                });
             }
         }
         return view;
